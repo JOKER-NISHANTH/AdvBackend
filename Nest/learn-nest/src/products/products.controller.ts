@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ProductsService } from './products.service';
-
+import { Product } from './products.model';
 @Controller('products')
 export class ProductsController {
     constructor(private readonly productsService: ProductsService) { }
@@ -9,17 +9,15 @@ export class ProductsController {
         @Body('title') prodTitle: string,
         @Body('desc') prodDesc: string,
         @Body('price') prodPrice: number
-    ) {
-        const generateId = this.productsService.insertProduct(
+    ): { id: string } {
+        return this.productsService.insertProduct(
             prodTitle,
             prodDesc,
             prodPrice);
-
-        return { id: generateId };
     }
 
     @Get("/all")
-    getAllProducts() {
+    getAllProducts(): Product[] {
         return this.productsService.getProducts();
     }
 
@@ -28,13 +26,17 @@ export class ProductsController {
         return this.productsService.getSingleProduct(proId);
     }
 
-    @Patch('/update/:id')
-    updateProduct(
-        @Param('id') proId: string,
-        @Body('title') prodTitle: string,
-        @Body('desc') prodDesc: string,
-        @Body('price') prodPrice: number
-    ) {
+    /**
+     *
+        @Patch('/update/:id')
+        updateProduct(
+            @Param('id') proId: string,
+            @Body('title') prodTitle: string,
+            @Body('desc') prodDesc: string,
+            @Body('price') prodPrice: number
+        ) {
 
-    }
+        }
+     */
+
 }

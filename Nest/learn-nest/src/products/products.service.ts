@@ -1,22 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { Products } from './products.model';
+import { Product } from './products.model';
 
 @Injectable()
 export class ProductsService {
     // Products type initial with empty array
-    private products: Products[] = [];
+    products: Product[] = [];
 
-    insertProduct(title: string, desc: string, price: number) {
+    insertProduct(title: string, desc: string, price: number): { id: string } {
         const prodID = Math.random().toString();
-        const newProduct = new Products(prodID, title, desc, price);
+        const newProduct = new Product(prodID, title, desc, price);
         this.products.push(newProduct);
-        return prodID
+        return { id: prodID };
     }
 
-    getProducts() {
+    getProducts(): Product[] {
         // Copy
-        return [...this.products];
+        return this.products;
     }
 
     getSingleProduct(productID: string) {
