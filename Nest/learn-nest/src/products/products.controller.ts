@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './products.model';
-import { title } from 'process';
+
 @Controller('products')
 export class ProductsController {
     constructor(private readonly productsService: ProductsService) { }
@@ -18,20 +18,18 @@ export class ProductsController {
     }
 
     @Get("/all")
-    async getAllProducts() {
-        const products = await this.productsService.getProducts();
+    async getAllProducts(): Promise<Product[]> {
+        return await this.productsService.getProducts();
 
         // transform the data (_id to id and remove __v)
-        return products.map((prod) => ({ id: prod.id, title: prod.title, desc: prod.desc, price: prod.price }));
+
     }
 
     @Get("/one/:id")
     async getOneProducts(@Param('id') proId: string) {
-        const product = this.productsService.getSingleProduct(proId);
-        return product
+
+        return this.productsService.getSingleProduct(proId);
     }
-
-
 
     @Patch('/update/:id')
     async updateProduct(
@@ -41,14 +39,14 @@ export class ProductsController {
         @Body('price') prodPrice: number
     ) {
         const updatedPro = await this.productsService.updateProduct(proId, prodTitle, prodDesc, prodPrice)
-        return updatedPro;
+        return "Updated Successfully"
     }
 
 
     @Delete("delete/:id")
     async removeProduct(@Param('id') proId: string) {
         await this.productsService.deleteProduct(proId);
-        return null
+        return "Deleted Successfully"
 
     }
 

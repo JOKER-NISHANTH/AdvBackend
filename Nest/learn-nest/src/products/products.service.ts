@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 @Injectable()
 export class ProductsService {
     // Products type initial with empty array
-    products: Product[] = [];
+    // products: Product[] = [];
 
     constructor(@InjectModel("Product") private readonly productModel: Model<Product>) { }
 
@@ -40,7 +40,8 @@ export class ProductsService {
         // new product array is created
         const products = await this.productModel.find().exec();
         // console.log(products);
-        return products as Product[];
+        return products
+
     }
 
     async getSingleProduct(productId: string) {
