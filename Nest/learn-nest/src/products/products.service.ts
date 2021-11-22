@@ -42,10 +42,12 @@ export class ProductsService {
         // console.log(products);
         return products as Product[];
     }
+
     async getSingleProduct(productId: string) {
         const product = await this.findProduct(productId);
         return { id: product.id, title: product.title, desc: product.desc, price: product.price };
     }
+
     async updateProduct(proId: string, title: string, desc: string, price: number) {
         const updatedProduct = await this.findProduct(proId);
         if (title) updatedProduct.title = title;
@@ -62,4 +64,5 @@ export class ProductsService {
         // const product = await this.findProduct(productId);
 
     }
+
 }
