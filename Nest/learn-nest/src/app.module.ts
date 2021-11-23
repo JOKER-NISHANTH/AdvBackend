@@ -14,7 +14,7 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [ProductsModule, MongooseModule.forRoot(
     //! DataBase URI
-
+    'mongodb+srv://JOKER-NISHANTH:NiShAnTh&007@cluster0.whmue.mongodb.net/NestProducts-demo?retryWrites=true&w=majority'
   ), UsersModule,
 
   ],

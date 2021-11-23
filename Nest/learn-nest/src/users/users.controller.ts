@@ -1,4 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+    Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe
+} from '@nestjs/common';
 import { UserDTO } from 'src/dto/users.dto';
 import { User } from './users.model';
 import { UsersService } from "./users.service"
@@ -8,6 +10,7 @@ export class UsersController {
     constructor(private readonly userService: UsersService) { }
 
     @Post("/register")
+    @UsePipes(new ValidationPipe())
     async createUser(@Body() userDto: UserDTO): Promise<string> {
         return await this.userService.register(userDto)
     }
@@ -24,17 +27,18 @@ export class UsersController {
     }
 
     @Patch('/update/:id')
+    @UsePipes(new ValidationPipe())
     async updateUser(
         @Param('id') userId: string,
         @Body() userDto: UserDTO
-    ) {
+    ): Promise<string> {
         const updatedPro = await this.userService.updateUser(userId, userDto)
         return "Updated Successfully"
     }
 
 
     @Delete("delete/:id")
-    async deleteUser(@Param('id') userId: string) {
+    async deleteUser(@Param('id') userId: string): Promise<string> {
         await this.userService.deleteUser(userId);
         return "Deleted Successfully"
 
