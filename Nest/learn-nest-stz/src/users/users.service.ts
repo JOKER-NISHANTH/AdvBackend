@@ -57,7 +57,7 @@ export class UsersService {
         updateUser.save();
     }
 
-    async deleteUser(userId: string) {
+    async deleteUser(userId: string): Promise<void> {
         // await this.userModel.deleteOne({ _id: productId }).exec();
         const result = await this.userModel.deleteOne({ id: userId }).exec();
         console.log(result)
